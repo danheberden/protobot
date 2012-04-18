@@ -190,7 +190,7 @@ bot = jerk( function( j ) {
   // Finger
   j.watch_for( /^([\/.,`?]?)f(?:inger)?(\s+[-\[\]\{\}`|_\w]+)?\s*$/, function( message ) {
     // Return if botty is present
-    if ( message.match_data[1] == '?' && message.source.clients.indexOf( 'bot-t' ) >= 0 )
+    if ( message.match_data[1] == '?' && /^bot-t\d?$/.test( message.source.clients ) )
       return
 
     var name = to( message, 2 )
@@ -204,7 +204,7 @@ bot = jerk( function( j ) {
   // Sandbox
   j.watch_for( /^([\/.,`?]?)eval (?:(.+?)(?:\/\/\s*@\s*([-\[\]\{\}`|_\w]+))|(.+))/, function( message ){
     // Return if botty is present
-    if ( message.match_data[1] == '?' && message.source.clients.indexOf( 'bot-t' ) >= 0 )
+    if ( message.match_data[1] == '?' && /^bot-t\d?$/.test( message.source.clients ) )
       return
 
     var js = message.match_data[2] || message.match_data[4]
@@ -325,7 +325,7 @@ function watchForSingle ( trigger, msg ) {
   jerk( function( j ) {
     j.watch_for( new RegExp( "^([\\/.,`?])?" + trigger + "(?:\\s*@\\s*([-\\[\\]\\{\\}`|_\\w]+))?\\s*$", "i" ), function( message ) {
       // Return if botty is present
-      if ( message.match_data[1] == '?' && message.source.clients.indexOf( 'bot-t' ) >= 0 )
+      if ( message.match_data[1] == '?' && /^bot-t\d?$/.test( message.source.clients ) )
         return
 
       message.say( to( message, 2 ) + ": " + msg )
